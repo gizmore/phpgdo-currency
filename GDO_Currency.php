@@ -17,7 +17,7 @@ use GDO\Core\GDT_UInt;
  * @TODO: implement currency conversion.
  * 
  * @author gizmore
- * @version 7.0.0
+ * @version 7.0.1
  * @since 6.8.0
 */
 final class GDO_Currency extends GDO
@@ -56,6 +56,11 @@ final class GDO_Currency extends GDO
 		return sprintf('%s%.0'.$this->getDigits().'f',
 			$with_symbol ? $this->getSymbol().' ' : '',
 			$value);
+	}
+	
+	public function renderChoice() : string
+	{
+		return $this->displayName();
 	}
 	
 	###############
