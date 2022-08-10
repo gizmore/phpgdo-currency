@@ -58,7 +58,7 @@ final class GDO_Currency extends GDO
 			$value);
 	}
 	
-	public function renderChoice() : string
+	public function renderOption() : string
 	{
 		return $this->displayName();
 	}
