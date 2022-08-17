@@ -73,7 +73,7 @@ final class Module_Currency extends GDO_Module
 	public function getUserSettings()
 	{
 		return [
-			GDT_Currency::make('currency')->notNull()->initial('EUR'),
+			GDT_Currency::make('currency')->noacl()->notNull()->initial('EUR'),
 		];
 	}
 	
