@@ -50,7 +50,7 @@ final class GDO_Currency extends GDO
 	################
 	### Display ####
 	################
-	public function displayName() { return $this->displayValue($this->getRatio(), true); }
+	public function renderName(): string { return $this->displayValue($this->getRatio(), true); }
 	public function displayValue($value, $with_symbol=true)
 	{
 		return sprintf('%s%.0'.$this->getDigits().'f',
@@ -60,7 +60,7 @@ final class GDO_Currency extends GDO
 	
 	public function renderOption() : string
 	{
-		return $this->displayName();
+		return $this->renderName();
 	}
 	
 	###############
