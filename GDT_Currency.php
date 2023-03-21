@@ -5,28 +5,31 @@ use GDO\Core\GDT_ObjectSelect;
 
 /**
  * Currency selection.
- * 
- * @see GDO_Currency
- * @author gizmore
+ *
  * @version 6.11.3
  * @since 6.8.0
+ * @see GDO_Currency
+ * @author gizmore
  */
 final class GDT_Currency extends GDT_ObjectSelect
 {
+
 	###########
 	### GDT ###
 	###########
+	public $supported = false;
+
+	#################
+	### Supported ###
+	#################
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->table(GDO_Currency::table());
 	}
 
-	#################
-	### Supported ###
-	#################
-	public $supported = false;
-	public function supported($supported=true)
+	public function supported($supported = true)
 	{
 		$this->supported = $supported;
 		return $this;
@@ -43,7 +46,6 @@ final class GDT_Currency extends GDT_ObjectSelect
 		}
 		return $this->table ? $this->table->allCached() : [];
 	}
-	
-	
-	
+
+
 }

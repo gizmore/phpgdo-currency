@@ -10,25 +10,29 @@ use GDO\User\GDO_User;
  * Builds a list of currency and conversion rates.
  * Configure currency for site default, supported currencies and user currency.
  * Updates them daily via a cronnjob.
- * 
- * @author gizmore
+ *
  * @version 6.11.3
  * @since 5.0.0
+ * @author gizmore
  */
 final class Module_Currency extends GDO_Module
 {
+
 	##############
 	### Module ###
 	##############
 	public int $priority = 10;
-	public function onLoadLanguage() : void { $this->loadLanguage('lang/currency'); }
-	public function getClasses() : array { return [GDO_Currency::class]; }
-	public function getDependencies() : array { return ['Cronjob']; }
+
+	public function onLoadLanguage(): void { $this->loadLanguage('lang/currency'); }
+
+	public function getClasses(): array { return [GDO_Currency::class]; }
+
+	public function getDependencies(): array { return ['Cronjob']; }
 
 	/**
 	 * On install creates the EUR currency.
 	 */
-	public function onInstall() : void
+	public function onInstall(): void
 	{
 		if (!GDO_Currency::getByISO('EUR'))
 		{
@@ -42,54 +46,56 @@ final class Module_Currency extends GDO_Module
 			])->insert();
 		}
 	}
-	
+
 	##############
 	### Config ###
 	##############
-	public function getConfig() : array
+	public function getConfig(): array
 	{
 		return [
-			GDT_Currency::make('ccy_site')->initial("EUR"),
+			GDT_Currency::make('ccy_site')->initial('EUR'),
 			GDT_Currency::make('ccy_supported')->multiple()->initial("[\"EUR\", \"USD\"]"),
-			GDT_RunAt::make('ccy_update_fqcy')->initial("5 /2 * * *"),
+			GDT_RunAt::make('ccy_update_fqcy')->initial('5 /2 * * *'),
 		];
 	}
-	
-	/**
-	 * @return GDO_Currency
-	 */
-	public function cfgCurrency() { return $this->getConfigValue('ccy_site'); }
-	
-	/**
-	 * @return GDO_Currency[]
-	 */
-	public function cfgSupported() { return $this->getConfigValue('ccy_supported'); }
-	
-	public function cfgUpdateFrequency() { return $this->getConfigVar('ccy_update_fqcy'); }
-	
-	################
-	### Settings ###
-	################
+
 	public function getUserSettings()
 	{
 		return [
 			GDT_Currency::make('currency')->noacl()->notNull()->initial('EUR'),
 		];
 	}
-	
+
 	/**
-	 * @param GDO_User $user
 	 * @return GDO_Currency
 	 */
-	public function cfgUserCurrency(GDO_User $user=null)
+	public function cfgCurrency() { return $this->getConfigValue('ccy_site'); }
+
+	/**
+	 * @return GDO_Currency[]
+	 */
+	public function cfgSupported() { return $this->getConfigValue('ccy_supported'); }
+
+	################
+	### Settings ###
+	################
+
+	public function cfgUpdateFrequency() { return $this->getConfigVar('ccy_update_fqcy'); }
+
+	public function cfgUserCurrencyId(GDO_User $user = null)
+	{
+		return $this->cfgUserCurrency($user)->getID();
+	}
+
+	/**
+	 * @param GDO_User $user
+	 *
+	 * @return GDO_Currency
+	 */
+	public function cfgUserCurrency(GDO_User $user = null)
 	{
 		$user = $user ? $user : GDO_User::current();
 		return $this->userSettingValue($user, 'currency');
-	}
-	
-	public function cfgUserCurrencyId(GDO_User $user=null)
-	{
-		return $this->cfgUserCurrency($user)->getID();
 	}
 
 }

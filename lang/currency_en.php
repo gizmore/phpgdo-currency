@@ -1,5 +1,6 @@
 <?php
 namespace GDO\Currency\lang;
+
 return [
 	'currency' => 'Currency',
 	'cfg_ccy_supported' => 'Supported currencies',
