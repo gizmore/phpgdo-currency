@@ -15,12 +15,12 @@ use GDO\Currency\Module_Currency;
 final class Cronjob extends MethodCronjob
 {
 
-	public function runAt()
+	public function runAt(): string
 	{
 		return Module_Currency::instance()->cfgUpdateFrequency();
 	}
 
-	public function run()
+	public function run(): void
 	{
 		$module = Module_Currency::instance();
 		$this->log('Requesting ECB exchange rates');
