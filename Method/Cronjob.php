@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Currency\Method;
 
 use GDO\Cronjob\MethodCronjob;
@@ -8,7 +9,7 @@ use GDO\Currency\Module_Currency;
 /**
  * Hourly sync currencies with EZB.
  *
- * @version 6.11.3
+ * @version 7.0.3
  * @since 6.4.0
  * @author gizmore
  */
@@ -32,7 +33,7 @@ final class Cronjob extends MethodCronjob
 		}
 	}
 
-	private function syncCurrency(Module_Currency $module, $iso, $rate)
+	private function syncCurrency(Module_Currency $module, string $iso, string $rate): void
 	{
 		if (!($currency = GDO_Currency::getByISO($iso)))
 		{
@@ -53,9 +54,9 @@ final class Cronjob extends MethodCronjob
 		$currency->save();
 	}
 
-	private function calcDigits($rate)
+	private function calcDigits($rate): string
 	{
-		return strlen($rate) - (strpos($rate, '.') + 1);
+		return (string) (strlen($rate) - (strpos($rate, '.') + 1));
 	}
 
 }
