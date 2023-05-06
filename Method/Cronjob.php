@@ -24,7 +24,7 @@ final class Cronjob extends MethodCronjob
 	public function run(): void
 	{
 		$module = Module_Currency::instance();
-		$this->log('Requesting ECB exchange rates');
+		$this->log('Requesting EZB exchange rates');
 		$xml = simplexml_load_file('http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
 		$this->log('Got EZB exchange rates');
 		foreach ($xml->Cube->Cube->Cube as $rate)
