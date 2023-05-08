@@ -38,7 +38,7 @@ final class GDT_Currency extends GDT_ObjectSelect
 	##############
 	### Select ###
 	##############
-	public function getChoices(): array
+	protected function getChoices(): array
 	{
 		if ($this->supported)
 		{
